@@ -1,0 +1,28 @@
+{
+  "name": "mxalign",
+  "version": "1.0.0",
+  "description": "C-x C-s your posture with a touch of AI finesse.",
+  "main": "main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexlu07/M-x-Align.git"
+  },
+  "keywords": [
+    "posture",
+    "ai",
+    "electron"
+  ],
+  "author": "Alex Lu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexlu07/M-x-Align/issues"
+  },
+  "homepage": "https://github.com/alexlu07/M-x-Align#readme",
+  "devDependencies": {
+    "electron": "^35.1.2"
+  }
+}
