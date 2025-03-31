@@ -1,0 +1,23 @@
+.index-page h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.model-list {
+    list-style: none;
+    margin-bottom: 20px;
+}
+.model-list li {
+    padding: 10px;
+    background-color: #e0e0e0;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+.start-button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

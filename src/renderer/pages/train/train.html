@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Train - Data Upload & Training</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container train-page">
+    <!-- Top State: Data Upload -->
+    <div class="train-state train-top">
+      <h1>Data Upload</h1>
+      <div class="upload-controls">
+        <div>
+          <label for="positive-upload">Positive</label>
+          <input type="file" id="positive-upload">
+        </div>
+        <div>
+          <label for="negative-upload">Negative</label>
+          <input type="file" id="negative-upload">
+        </div>
+      </div>
+      <button id="train-trigger" class="train-button">Train</button>
+    </div>
+
+    <!-- Bottom State: Training Metrics (hidden by default) -->
+    <div class="train-state train-bottom hidden">
+      <h1>Training in Progress</h1>
+      <p>Accuracy / Precision / Recall</p>
+      <div class="graph-placeholder"></div>
+      <button class="save-model-button">Save Model</button>
+    </div>
+  </div>
+
+  <script>
+    // Simple toggle for demo purposes
+    document.getElementById('train-trigger').addEventListener('click', function(){
+      document.querySelector('.train-top').classList.add('hidden');
+      document.querySelector('.train-bottom').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Overlay</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container overlay-page">
+    <!-- Small Overlay State -->
+    <div class="overlay-state overlay-small">
+      <div class="screen-box small">
+        <p>Screen 1</p>
+      </div>
+      <div class="screen-box small">
+        <p>Screen 2</p>
+      </div>
+      <div class="screen-box small">
+        <p>Screen 3</p>
+      </div>
+      <button id="overlay-expand" class="transition-button">Expand</button>
+    </div>
+
+    <!-- Big Overlay State (hidden by default) -->
+    <div class="overlay-state overlay-big hidden">
+      <div class="screen-box big">
+        <p>Big Screen</p>
+      </div>
+      <button id="overlay-collapse" class="transition-button">Collapse</button>
+    </div>
+  </div>
+
+  <script>
+    // Toggle between overlay states
+    document.getElementById('overlay-expand').addEventListener('click', function(){
+      document.querySelector('.overlay-small').classList.add('hidden');
+      document.querySelector('.overlay-big').classList.remove('hidden');
+    });
+    document.getElementById('overlay-collapse').addEventListener('click', function(){
+      document.querySelector('.overlay-big').classList.add('hidden');
+      document.querySelector('.overlay-small').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>

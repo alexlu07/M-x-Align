@@ -2,7 +2,7 @@
   "name": "mxalign",
   "version": "1.0.0",
   "description": "C-x C-s your posture with a touch of AI finesse.",
-  "main": "main/main.js",
+  "main": "src/main/main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
