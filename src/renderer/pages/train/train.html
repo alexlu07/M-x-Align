@@ -3,41 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Train - Data Upload & Training</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="train.css">
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <script src="train.js"></script>
+  <script src="https://kit.fontawesome.com/b6c486d3d4.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="container train-page">
-    <!-- Top State: Data Upload -->
-    <div class="train-state train-top">
-      <h1>Data Upload</h1>
-      <div class="upload-controls">
-        <div>
-          <label for="positive-upload">Positive</label>
-          <input type="file" id="positive-upload">
+  <div class="dropdown-box vertbox">
+    <div class="header" onclick="toggleDropdown()"><span><i class="fa-solid fa-caret-down open-icon"></i>Training Samples</span></div>
+    <div class="content horibox open">
+      <div class="samples vertbox">
+        <div class="sample-box vertbox selected">
+          <div class="sample-box-header">Positive</div>
+          <div class="sample-box-content">Click to upload</div>
         </div>
-        <div>
-          <label for="negative-upload">Negative</label>
-          <input type="file" id="negative-upload">
+        <div class="sample-box vertbox">
+          <div class="sample-box-header">Negative</div>
+          <div class="sample-box-content">Click to upload</div>
         </div>
       </div>
-      <button id="train-trigger" class="train-button">Train</button>
-    </div>
-
-    <!-- Bottom State: Training Metrics (hidden by default) -->
-    <div class="train-state train-bottom hidden">
-      <h1>Training in Progress</h1>
-      <p>Accuracy / Precision / Recall</p>
-      <div class="graph-placeholder"></div>
-      <button class="save-model-button">Save Model</button>
+      <div class="webcam"></div>
     </div>
   </div>
-
-  <script>
-    // Simple toggle for demo purposes
-    document.getElementById('train-trigger').addEventListener('click', function(){
-      document.querySelector('.train-top').classList.add('hidden');
-      document.querySelector('.train-bottom').classList.remove('hidden');
-    });
-  </script>
+  <button class="train-button"><i class="fa-solid fa-play"></i>Train</button>
+  
 </body>
 </html>

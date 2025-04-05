@@ -1,23 +1,127 @@
-.index-page h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
+body {
+	font-family: sans-serif;
+	background-color: #121212;
+	color: #e0e0e0;
+	width: 100vw;
+	height: 100vh;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	max-width: 1040px;
+	max-height: 650px;
+	flex: 1;
+	border-color: #388e3c; /* more muted green */
+}
+
+.upper-box {
+    padding: 40px;
 }
 
 .model-list {
-    list-style: none;
+    width: 55%;
+    padding: 26px 0;
+}
+
+.model-list h1 {
     margin-bottom: 20px;
+    font-size: 45px;
+    color: #ffffff;
 }
+
+.model-list ul {
+    flex: 2;
+    overflow-y: auto;
+    margin-bottom: 13px;
+}
+
 .model-list li {
-    padding: 10px;
-    background-color: #e0e0e0;
-    margin-bottom: 10px;
-    border-radius: 4px;
-}
-.start-button {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
+    list-style: none;
+    margin-bottom: 7px;
+    border-radius: 12px;
+    font-size: 26px;
     cursor: pointer;
+    color: #e0e0e0;
+    padding: 5px 12px;
+}
+
+.model-list li:hover {
+    background-color: #161616; /* slightly darker on hover */
+}
+
+.model-list li.selected {
+    background-color: #388e3c; /* muted green */
+    color: #000;
+}
+
+.model-list li.selected:hover {
+    background-color: #2e7d32; /* darker green on hover */
+}
+
+.model-list li i {
+    margin-left: 30px;
+    margin-right: 20px;
+}
+
+.model-list div {
+    margin-bottom: 7px;
+    font-size: 26px;
+    color: #e0e0e0;
+}
+
+.model-list div > a {
+    color: #4caf50;
+    text-decoration: none;
+    font-size: 26px;
+}
+
+.model-list div > a:hover {
+    text-decoration: underline;
+}
+
+.model-list div i {
+    margin-left: 30px;
+    margin-right: 20px;
+}
+
+.start-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #388e3c;
+    width: 40%;
+    min-height: auto;
+    align-self: center;
+    padding: 7px;
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.start-button:hover {
+    background-color: #2e7d32;
+}
+
+/* Scrollbar styling for WebKit browsers */
+.model-list ul::-webkit-scrollbar {
+    width: 12px;
+}
+
+.model-list ul::-webkit-scrollbar-track {
+    background: #1e1e1e;
+    border-radius: 10px;
+}
+
+.model-list ul::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+}
+
+.model-list ul::-webkit-scrollbar-thumb:hover {
+    background: #444;
 }

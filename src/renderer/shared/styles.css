@@ -2,17 +2,32 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-body {
-	font-family: sans-serif;
-	background-color: #f9f9f9;
-	padding: 20px;
-}
-.container {
-	max-width: 800px;
-	margin: 0 auto;
+	min-height: 0;
+	min-width: 0;
+	/* border: 1px solid black; */
+
 }
 
-.hidden {
-  	display: none;
+.vertbox {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	/* border-style: dotted; */
+}
+
+.horibox {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	/* border-style: dashed; */
+}
+
+/* Webcam */
+
+.webcam {
+	width: 300px;
+	height: 300px;
+	border-style: solid;
 }

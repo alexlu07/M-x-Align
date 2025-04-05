@@ -3,18 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>Dashboard</title>
-  <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="../../shared/styles.css">
+  <link rel="stylesheet" href="index.css">
+  <script src="index.js"></script>
+  <script src="https://kit.fontawesome.com/b6c486d3d4.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="container index-page">
-    <h1>Choose Model</h1>
-    <ul class="model-list">
-      <li>Model v1 - 10/23/25</li>
-      <li>Model v2 - 12/15/25</li>
-      <li>Model v3 - 01/05/26</li>
-    </ul>
-    <button class="start-button" onclick="window.location.href='train.html'">Start</button>
+  <div class="container vertbox">
+    <div class="upper-box horibox">
+      <div class="model-list vertbox">
+        <h1>Choose Model</h1>
+        <ul>
+          <li><i class="fa-solid fa-minus fa-fw"></i>10/23/25</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>12/15/25</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+          <li><i class="fa-solid fa-minus fa-fw"></i>01/05/26</li>
+        </ul>
+        <div><a href="../train/train.html"><i class="fa-solid fa-plus fa-fw"></i>Train new model</a></div>
+      </div>
+      <div class="webcam"></div>
+    </div>
+    <button class="start-button" onclick="window.location.href='../overlay/overlay.html'"><span><i class="fa-solid fa-play"></i> Start</span></button>
   </div>
 </body>
 </html>
