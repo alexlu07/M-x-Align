@@ -27,7 +27,77 @@
 /* Webcam */
 
 .webcam {
-	width: 300px;
-	height: 300px;
-	border-style: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.canvas {
+    border-radius: 12px;
+    background-color: #000;
+    margin-bottom: 20px;
+}
+
+.label-box {
+    width: 100%;
+    display: flex;
+	align-content: stretch;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.positive, .negative {
+	display: flex;
+	flex-direction: row;
+}
+
+.label {
+    font-size: 17px;
+	font-weight: bold;;
+	width: 80px;
+}
+
+.positive .label {
+	color: #388e3c;
+}
+
+.negative .label {
+	color: #c62828;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 25px;
+    background-color: #2c2c2c;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar .inner {
+    height: 100%;
+	position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+	border-radius: 5px;
+    transition: width 0.3s ease-in-out;
+	overflow: hidden;
+}
+
+.positive .inner {
+    background-color: #388e3c;
+    color: #000;
+}
+
+.negative .inner {
+    background-color: #c62828;
+    color: #000;
+}
+
+.percentage {
+    position: absolute;
+	margin-right: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    pointer-events: none;
 }

@@ -87,6 +87,10 @@ body {
     margin-right: 20px;
 }
 
+.webcam-box {
+    align-self: center;
+}
+
 .start-button {
     display: flex;
     align-items: center;

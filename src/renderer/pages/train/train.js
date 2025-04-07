@@ -7,3 +7,6 @@ function toggleDropdown() {
     icon.classList.toggle('open-icon');
     icon.classList.toggle('close-icon');
 }
+
+// .header
+// onclick="toggleDropdown()"

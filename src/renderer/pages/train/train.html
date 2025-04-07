@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="dropdown-box vertbox">
-    <div class="header" onclick="toggleDropdown()"><span><i class="fa-solid fa-caret-down open-icon"></i>Training Samples</span></div>
+    <div class="header"><span><i class="fa-solid fa-caret-down open-icon"></i>Training Samples</span></div>
     <div class="content horibox open">
       <div class="samples vertbox">
         <div class="sample-box vertbox selected">
@@ -22,7 +22,14 @@
           <div class="sample-box-content">Click to upload</div>
         </div>
       </div>
-      <div class="webcam"></div>
+      <div class="webcam-box vertbox">
+
+        <div class="webcam">
+          <canvas class="canvas" width="300" height="300"></canvas>
+        </div>
+        
+        <button class="webcam-button"><i class="fa-solid fa-record-vinyl"></i>Hold to Record</button>
+      </div>
     </div>
   </div>
   <button class="train-button"><i class="fa-solid fa-play"></i>Train</button>

@@ -121,6 +121,26 @@ body {
   cursor: pointer;
 }
 
+.webcam-box {
+  align-self: center;
+}
+
+.webcam-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #388e3c;
+  color: #000;
+  width: 100%;
+  font-weight: bold;
+  font-size: 24px;
+  padding: 13px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
 .train-button {
   display: block;
   background-color: #388e3c;
