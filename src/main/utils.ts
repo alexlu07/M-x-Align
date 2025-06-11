@@ -9,7 +9,8 @@ function angleBetween(a, b, c): number {
   const dot = ab[0] * cb[0] + ab[1] * cb[1] + ab[2] * cb[2];
   const mag1 = Math.sqrt(ab[0] ** 2 + ab[1] ** 2 + ab[2] ** 2);
   const mag2 = Math.sqrt(cb[0] ** 2 + cb[1] ** 2 + cb[2] ** 2);
-  return Math.acos(dot / (mag1 * mag2)); // in radians
+  const clamped = Math.max(-1, Math.min(1, dot / (mag1 * mag2))); // clamp to avoid NaN
+  return Math.acos(clamped); // in radians
 }
 
 function midpoint(a, b): { x: number; y: number; z: number } {

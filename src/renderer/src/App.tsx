@@ -1,8 +1,77 @@
 import Versions from './components/Versions';
 import electronLogo from './assets/electron.svg';
+// import { useContext } from 'react';
+// import { ImageContext } from './provider/Context';
+
+declare global {
+  interface Window {
+    getModelFiles: (modelId: string) => void;
+  }
+}
 
 function App(): React.JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping');
+  // const { images, setImages } = useContext(ImageContext);
+
+  // const ipcHandle = (): void => {
+  //   setImages((prev) => [...prev, prev.at(-1) + 1]);
+  //   console.log('Images:', images);
+  // };
+
+  const testTrain = (): void => {
+    // Each sample must have at least 27 keypoints (indices up to 26)
+    const sample1 = {
+      keypoints3D: Array.from({ length: 33 }, (_, i): Keypoint3D => {
+        return { x: i, y: i, z: i, score: 1, name: `kp${i}` };
+      }),
+      label: 0,
+    };
+
+    const sample2 = {
+      keypoints3D: Array.from({ length: 33 }, (_, i): Keypoint3D => {
+        return { x: i + 1, y: i + 2, z: i + 3, score: 1, name: `kp${i}` };
+      }),
+      label: 1,
+    };
+
+    const samples = Array.from({ length: 20 }, () => [sample1, sample2]).flat();
+
+    const log = (_, progress): void => {
+      console.log(
+        `Epoch: ${progress.epoch}, Loss: ${progress.loss}, Accuracy: ${progress.accuracy}`,
+      );
+    };
+
+    const stopListening = window.electron.ipcRenderer.on('trainProgress', log);
+
+    window.electron.ipcRenderer.invoke('train', samples).then((modelId) => {
+      console.log(`Model trained with ID: ${modelId}`);
+      stopListening();
+    });
+  };
+
+  const listModels = (): void => {
+    window.electron.ipcRenderer.invoke('listModels').then((models) => {
+      console.log('Available models:', models);
+    });
+  };
+
+  window.getModelFiles = (modelId: string): void => {
+    window.electron.ipcRenderer.invoke('loadFiles', modelId).then((files) => {
+      const jsonFile = new File([files.json.data], files.json.name, { type: files.json.type });
+      const weightsFile = new File([files.weights.data], files.weights.name, {
+        type: files.weights.type,
+      });
+
+      console.log('Model files:', jsonFile, weightsFile);
+
+      // print contents of the JSON file
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        console.log('Model JSON content:', e.target?.result);
+      };
+      reader.readAsText(jsonFile);
+    });
+  };
 
   return (
     <>
@@ -24,6 +93,16 @@ function App(): React.JSX.Element {
         <div className="action">
           <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
             Send IPC
+          </a>
+        </div>
+        <div className="action">
+          <a target="_blank" rel="noreferrer" onClick={testTrain}>
+            Test Train
+          </a>
+        </div>
+        <div className="action">
+          <a target="_blank" rel="noreferrer" onClick={listModels}>
+            List models
           </a>
         </div>
       </div>

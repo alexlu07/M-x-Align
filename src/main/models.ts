@@ -33,17 +33,19 @@ export function listModels(): string[] {
 }
 
 export function loadFiles(model: string): ModelFiles {
-  const toFile = (base: string, name: string, type: string): File => {
-    const path = join(base, name);
-    const blob = new Blob([fs.readFileSync(path)], { type });
-    return new File([blob], name, { type });
-  };
-
   const path = join(MODEL_DIR, model);
 
   return {
-    json: toFile(path, 'model.json', 'application/json'),
-    weights: toFile(path, 'weights.bin', 'application/octet-stream'),
+    json: {
+      name: 'model.json',
+      type: 'application/json',
+      data: fs.readFileSync(join(path, 'model.json')).buffer,
+    },
+    weights: {
+      name: 'weights.bin',
+      type: 'application/octet-stream',
+      data: fs.readFileSync(join(path, 'weights.bin')).buffer,
+    },
   };
 }
 
@@ -77,6 +79,7 @@ function prepareData(samples: { keypoints3D: Keypoint3D[]; label: number }[]): {
     const backAngleLeft = angleBetween(lHip, lShoulder, nose);
     const backAngleRight = angleBetween(rHip, rShoulder, nose);
     const backAngle = (backAngleLeft + backAngleRight) / 2;
+
     const torsoLength = euclidean(lShoulder, lHip) + euclidean(rShoulder, rHip);
 
     return [
@@ -114,7 +117,7 @@ export async function train(
   });
 
   model.compile({
-    optimizer: tf.train.adam(1e-4),
+    optimizer: tf.train.adam(1e-3),
     loss: 'categoricalCrossentropy',
     metrics: ['accuracy'],
   });
@@ -126,7 +129,7 @@ export async function train(
     callbacks: callbacks,
   });
 
-  const name = new Date().toLocaleString();
+  const name = new Date().toISOString();
   const path = join(MODEL_DIR, name);
 
   await model.save(`file://${path}`);
