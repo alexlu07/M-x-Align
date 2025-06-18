@@ -34,6 +34,12 @@ export const App = (): React.JSX.Element => {
     }
   }, []);
 
+  /*
+  TODO:
+  - Create Hook for managing modelRef and currentModel
+  - Put webcam + keypoint + pose logic on a single process
+  */
+
   // const testTrain = (): void => {
   //   // Each sample must have at least 27 keypoints (indices up to 26)
   //   const sample1 = {
