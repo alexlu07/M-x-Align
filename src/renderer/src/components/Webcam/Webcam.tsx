@@ -15,6 +15,8 @@ export const Webcam = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const requestRef = useRef<number>(null);
+
   useEffect(() => {
     if (!stream) {
       navigator.mediaDevices.getUserMedia({ video: true }).then((result) => {
@@ -38,7 +40,7 @@ export const Webcam = ({
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
 
-        requestAnimationFrame(detectPose);
+        requestRef.current = requestAnimationFrame(detectPose);
       });
     }
 
@@ -73,7 +75,13 @@ export const Webcam = ({
         }
       }
 
-      requestAnimationFrame(detectPose);
+      requestRef.current = requestAnimationFrame(detectPose);
+    };
+
+    return () => {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
     };
   }, [stream, setStream, poseModelRef, keypointsRef]);
 

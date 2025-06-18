@@ -1,27 +1,12 @@
 import { join } from 'path';
 import fs from 'fs';
 import { app } from 'electron';
-import * as tf from '@tensorflow/tfjs-node';
-import { angleBetween, euclidean, midpoint } from './utils';
+import * as tf from '@tensorflow/tfjs';
+import { preprocess } from '@shared/utils';
 
 const MODEL_DIR = join(app.getPath('userData'), 'models');
 
-// Keypoints: https://github.com/tensorflow/tfjs-models/tree/master/pose-detection
-const keypointIdxs = [
-  /* eslint-disable */
-  0, // nose
-  2, 5, // eyes
-  7, 8, // ears
-  9, 10, // mouth
-  11, 12, // shoulders
-  13, 14, // elbows
-  15, 16, // wrists
-  23, 24, // hips
-  25, 26, // knees
-  /* eslint-enable */
-];
-
-export function listModels(): string[] {
+export const listModels = (): string[] => {
   if (!fs.existsSync(MODEL_DIR)) {
     fs.mkdirSync(MODEL_DIR, { recursive: true });
     return [];
@@ -30,9 +15,9 @@ export function listModels(): string[] {
   return fs.readdirSync(MODEL_DIR).filter((file) => {
     return fs.statSync(join(MODEL_DIR, file)).isDirectory();
   });
-}
+};
 
-export function loadFiles(model: string): ModelFiles {
+export const loadFiles = (model: string): ModelFiles => {
   const path = join(MODEL_DIR, model);
 
   return {
@@ -47,51 +32,17 @@ export function loadFiles(model: string): ModelFiles {
       data: fs.readFileSync(join(path, 'weights.bin')).buffer,
     },
   };
-}
+};
 
-function prepareData(samples: { keypoints3D: Keypoint3D[]; label: number }[]): {
+const prepareData = (
+  samples: { keypoints3D: Keypoint3D[]; label: number }[],
+): {
   xs: tf.Tensor;
   ys: tf.Tensor;
   inputShape: number;
   outputShape: number;
-} {
-  const data = samples.map((s) => {
-    const keypoints = keypointIdxs.map((idx) => s.keypoints3D[idx]);
-    const flattened = keypoints.flatMap((kp) => [kp.x, kp.y, kp.z, kp.score]);
-
-    const lShoulder = s.keypoints3D[11];
-    const rShoulder = s.keypoints3D[12];
-    const lHip = s.keypoints3D[23];
-    const rHip = s.keypoints3D[24];
-    const lEar = s.keypoints3D[7];
-    const rEar = s.keypoints3D[8];
-    const nose = s.keypoints3D[0];
-
-    const shoulderDist = euclidean(lShoulder, rShoulder);
-    const shoulderTilt = lShoulder.y - rShoulder.y;
-    const spineMid = midpoint(lShoulder, rShoulder);
-    const headForward = nose.z - spineMid.z;
-
-    const neckAngleLeft = angleBetween(lShoulder, lEar, nose);
-    const neckAngleRight = angleBetween(rShoulder, rEar, nose);
-    const neckAngle = (neckAngleLeft + neckAngleRight) / 2;
-
-    const backAngleLeft = angleBetween(lHip, lShoulder, nose);
-    const backAngleRight = angleBetween(rHip, rShoulder, nose);
-    const backAngle = (backAngleLeft + backAngleRight) / 2;
-
-    const torsoLength = euclidean(lShoulder, lHip) + euclidean(rShoulder, rHip);
-
-    return [
-      ...flattened,
-      shoulderDist,
-      shoulderTilt,
-      headForward,
-      neckAngle,
-      backAngle,
-      torsoLength,
-    ];
-  });
+} => {
+  const data = samples.map((s) => preprocess(s.keypoints3D));
 
   const labels = samples.map((s) => s.label);
 
@@ -99,12 +50,12 @@ function prepareData(samples: { keypoints3D: Keypoint3D[]; label: number }[]): {
   const ys = tf.oneHot(tf.tensor1d(labels, 'int32'), 2);
 
   return { xs, ys, inputShape: data[0].length, outputShape: 2 };
-}
+};
 
-export async function train(
+export const train = async (
   samples: { keypoints3D: Keypoint3D[]; label: number }[],
   callbacks: tf.CustomCallbackArgs,
-): Promise<string> {
+): Promise<string> => {
   const { xs, ys, inputShape, outputShape } = prepareData(samples);
 
   const model = tf.sequential({
@@ -135,4 +86,4 @@ export async function train(
   await model.save(`file://${path}`);
 
   return name;
-}
+};

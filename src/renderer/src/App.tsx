@@ -16,7 +16,6 @@ export const App = (): React.JSX.Element => {
   const initialized = useRef<boolean>(false);
 
   useEffect(() => {
-    console.log('test');
     const initPoseModel = async (): Promise<void> => {
       await tf.ready();
 
