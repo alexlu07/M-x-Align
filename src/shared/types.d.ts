@@ -1,6 +1,14 @@
 type ModelFiles = {
-  json: File;
-  weights: File;
+  json: {
+    name: string;
+    type: string;
+    data: ArrayBuffer;
+  };
+  weights: {
+    name: string;
+    type: string;
+    data: ArrayBuffer;
+  };
 };
 
 type Keypoint3D = {
