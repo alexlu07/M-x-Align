@@ -35,14 +35,14 @@ export const loadFiles = (model: string): ModelFiles => {
 };
 
 const prepareData = (
-  samples: { keypoints3D: Keypoint3D[]; label: number }[],
+  samples: Sample[],
 ): {
   xs: tf.Tensor;
   ys: tf.Tensor;
   inputShape: number;
   outputShape: number;
 } => {
-  const data = samples.map((s) => preprocess(s.keypoints3D));
+  const data = samples.map((s) => preprocess(s.keypoints));
 
   const labels = samples.map((s) => s.label);
 
@@ -53,7 +53,7 @@ const prepareData = (
 };
 
 export const train = async (
-  samples: { keypoints3D: Keypoint3D[]; label: number }[],
+  samples: Sample[],
   callbacks: tf.CustomCallbackArgs,
 ): Promise<string> => {
   const { xs, ys, inputShape, outputShape } = prepareData(samples);

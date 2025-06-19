@@ -18,3 +18,8 @@ type Keypoint3D = {
   score: number;
   name: string;
 };
+
+type Sample = {
+  keypoints: Keypoint3D[];
+  label: number;
+};

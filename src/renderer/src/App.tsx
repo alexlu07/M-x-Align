@@ -4,6 +4,7 @@ import * as poseDetection from '@tensorflow-models/pose-detection';
 import { AppContext } from '@renderer/AppContext';
 import { Route, Routes } from 'react-router';
 import { Home } from './pages/Home';
+import { Train } from './pages/Train';
 
 export const App = (): React.JSX.Element => {
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -69,6 +70,7 @@ export const App = (): React.JSX.Element => {
     >
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/train" element={<Train />} />
       </Routes>
     </AppContext>
   );

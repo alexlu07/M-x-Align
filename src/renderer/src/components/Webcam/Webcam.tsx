@@ -1,13 +1,13 @@
 import { AppContext } from '@renderer/AppContext';
-import { Ref, useContext, useEffect, useRef } from 'react';
+import { memo, Ref, useContext, useEffect, useRef } from 'react';
 import { drawKeypoints, drawSkeleton } from './drawing';
 
-export const Webcam = ({
+const WebcamComponent = ({
   display = true,
-  capture,
+  capture = null,
 }: {
   display?: boolean;
-  capture?: (ctx: CanvasRenderingContext2D, keypoints: Keypoint3D[]) => void | null;
+  capture?: ((imageData: ImageData, keypoints: Keypoint3D[]) => void) | null;
   keypointsRef?: Ref<Keypoint3D>;
 }): React.JSX.Element => {
   const { stream, setStream, poseModelRef, keypointsRef } = useContext(AppContext);
@@ -86,11 +86,13 @@ export const Webcam = ({
   }, [stream, setStream, poseModelRef, keypointsRef]);
 
   const handleCapture = (): void => {
-    const ctx = canvasRef.current?.getContext('2d');
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
     const keypoints = keypointsRef?.current;
 
-    if (capture && ctx && keypoints) {
-      capture(ctx, keypoints);
+    if (capture && canvas && ctx && keypoints) {
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      capture(imageData, keypoints);
     }
   };
 
@@ -103,3 +105,5 @@ export const Webcam = ({
     </div>
   );
 };
+
+export const Webcam = memo(WebcamComponent);
