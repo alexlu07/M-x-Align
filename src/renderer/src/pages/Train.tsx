@@ -1,4 +1,5 @@
 import { AppContext } from '@renderer/AppContext';
+import { ImageBox } from '@renderer/components/ImageBox';
 import { PredictionBar } from '@renderer/components/PredictionBar';
 import { Webcam } from '@renderer/components/Webcam';
 import { Logs } from '@tensorflow/tfjs';
@@ -41,8 +42,8 @@ export const Train = (): React.JSX.Element => {
   return (
     <div>
       <div>
-        {/* pos */}
-        {/* neg */}
+        <ImageBox type="Positive" images={posImages} />
+        <ImageBox type="Positive" images={negImages} />
       </div>
       {trainView && <button onClick={() => setTrainView(false)} />}
       <div>

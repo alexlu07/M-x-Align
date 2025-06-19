@@ -17,7 +17,7 @@ export const ModelList = (): React.JSX.Element => {
 
   return (
     <div>
-      <h1>Choose Model {currentModel}</h1>
+      <div>Choose Model {currentModel}</div>
       <ul>
         {modelList.map((modelId) => {
           if (modelId === currentModel) {
