@@ -2,12 +2,12 @@ type ModelFiles = {
   json: {
     name: string;
     type: string;
-    data: ArrayBuffer;
+    data: Buffer<ArrayBuffer>;
   };
   weights: {
     name: string;
     type: string;
-    data: ArrayBuffer;
+    data: Buffer<ArrayBuffer>;
   };
 };
 

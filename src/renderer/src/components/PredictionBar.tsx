@@ -1,6 +1,6 @@
 import { AppContext } from '@renderer/AppContext';
 import { preprocess } from '@shared/utils';
-import { tensor1d } from '@tensorflow/tfjs';
+import { Tensor, tensor2d } from '@tensorflow/tfjs';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 export const PredictionBar = (): React.JSX.Element => {
@@ -14,9 +14,10 @@ export const PredictionBar = (): React.JSX.Element => {
       const keypoints = keypointsRef?.current;
       const model = modelRef?.current;
       if (keypoints && model) {
-        const input = preprocess(keypointsRef);
-        const results = model.predict(tensor1d(input));
-        setPrediction(results[0]);
+        const input = preprocess(keypointsRef.current);
+        const results = model.predict(tensor2d(input, [1, input.length])) as Tensor;
+
+        setPrediction(results.dataSync()[0]);
       }
 
       requestRef.current = requestAnimationFrame(predictPose);

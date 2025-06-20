@@ -1,7 +1,7 @@
 import { join } from 'path';
 import fs from 'fs';
 import { app } from 'electron';
-import * as tf from '@tensorflow/tfjs';
+import * as tf from '@tensorflow/tfjs-node';
 import { preprocess } from '@shared/utils';
 
 const MODEL_DIR = join(app.getPath('userData'), 'models');
@@ -24,12 +24,12 @@ export const loadFiles = (model: string): ModelFiles => {
     json: {
       name: 'model.json',
       type: 'application/json',
-      data: fs.readFileSync(join(path, 'model.json')).buffer,
+      data: fs.readFileSync(join(path, 'model.json')),
     },
     weights: {
       name: 'weights.bin',
       type: 'application/octet-stream',
-      data: fs.readFileSync(join(path, 'weights.bin')).buffer,
+      data: fs.readFileSync(join(path, 'weights.bin')),
     },
   };
 };
