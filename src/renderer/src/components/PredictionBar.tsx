@@ -32,7 +32,7 @@ export const PredictionBar = (): React.JSX.Element => {
   }, [keypointsRef, modelRef]);
 
   return (
-    <div>
+    <div className="label-box vertbox">
       <div className="positive">
         <div className="label">Positive</div>
         <div className="progress-bar">

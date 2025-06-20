@@ -1,5 +1,6 @@
 import { AppContext } from '@renderer/AppContext';
 import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
 export const ModelList = (): React.JSX.Element => {
   const { currentModel, setModel } = useContext(AppContext);
@@ -16,8 +17,8 @@ export const ModelList = (): React.JSX.Element => {
   }, [setModel]);
 
   return (
-    <div>
-      <div>Choose Model {currentModel}</div>
+    <div className="model-list vertbox">
+      <h1>Choose Model {currentModel}</h1>
       <ul>
         {modelList.map((modelId) => {
           if (modelId === currentModel) {
@@ -37,6 +38,12 @@ export const ModelList = (): React.JSX.Element => {
           }
         })}
       </ul>
+      <div>
+        <Link to="/train">
+          <i className="fa-solid fa-plus fa-fw" />
+          Train
+        </Link>
+      </div>
     </div>
   );
 };

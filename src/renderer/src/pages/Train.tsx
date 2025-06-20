@@ -29,6 +29,7 @@ export const Train = (): React.JSX.Element => {
   const startTraining = (): void => {
     const stopListening = window.electron.ipcRenderer.on('trainProgress', (_, log) => {
       setLogs((prev) => [...prev, log]);
+      console.log(log);
     });
 
     window.electron.ipcRenderer.invoke('train', trainingData).then((modelId) => {
@@ -41,16 +42,40 @@ export const Train = (): React.JSX.Element => {
   };
 
   return (
-    <div>
-      <div>
-        <ImageBox type="Positive" images={posImages} />
-        <ImageBox type="Positive" images={negImages} />
+    <div className="container horibox">
+      <div className="dropdown-box vertbox">
+        <div className="header">
+          <span>
+            <i className="fa-solid fa-caret-down"></i>Training Samples
+          </span>
+        </div>
+        {!trainView && (
+          <div className="samples vertbox">
+            <ImageBox
+              type="Positive"
+              images={posImages}
+              onClick={() => {
+                focusRef.current = false;
+              }}
+            />
+            <ImageBox
+              type="Negative"
+              images={negImages}
+              onClick={() => {
+                focusRef.current = true;
+              }}
+            />
+          </div>
+        )}
       </div>
+
       {trainView && <button onClick={() => setTrainView(false)} />}
+
       <div>
         <Webcam capture={trainView ? null : captureCallback} />
         {trainView && <PredictionBar />}
       </div>
+
       {!trainView && (
         <button
           onClick={() => {
@@ -59,7 +84,8 @@ export const Train = (): React.JSX.Element => {
           }}
         />
       )}
-      <Graphs logs={logs} />
+
+      {trainView && <Graphs logs={logs} />}
     </div>
   );
 };

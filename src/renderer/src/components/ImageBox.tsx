@@ -3,9 +3,11 @@ import { useEffect, useRef } from 'react';
 export const ImageBox = ({
   type,
   images,
+  onClick,
 }: {
   type: string;
   images: ImageData[];
+  onClick: () => void;
 }): React.JSX.Element => {
   const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
 
@@ -24,8 +26,8 @@ export const ImageBox = ({
   }, [images]);
 
   return (
-    <div>
-      <div>{type}</div>
+    <div className="sample-box vertbox" onClick={onClick}>
+      <div className="sample-box-header">{type}</div>
 
       {images.length ? (
         images.map((_, idx) => (
@@ -34,6 +36,7 @@ export const ImageBox = ({
             ref={(el) => {
               canvasRefs.current[idx] = el;
             }}
+            className="mini-canvas"
           />
         ))
       ) : (

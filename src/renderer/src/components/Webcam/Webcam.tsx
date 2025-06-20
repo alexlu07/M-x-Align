@@ -19,7 +19,7 @@ const WebcamComponent = ({
 
   useEffect(() => {
     if (!stream) {
-      navigator.mediaDevices.getUserMedia({ video: true }).then((result) => {
+      navigator.mediaDevices.getUserMedia({ video: { width: 300, height: 300 } }).then((result) => {
         setStream(result);
       });
       return;
@@ -97,11 +97,22 @@ const WebcamComponent = ({
   };
 
   return (
-    <div>
+    <div className="webcam">
       <video style={{ display: 'none' }} ref={videoRef} />
-      <canvas style={{ display: display ? 'flex' : 'none' }} ref={canvasRef} />
+      <canvas
+        className="canvas"
+        width="300"
+        height="300"
+        style={{ display: display ? 'flex' : 'none' }}
+        ref={canvasRef}
+      />
 
-      {capture && <button style={{ width: 100, height: 20 }} onClick={handleCapture}></button>}
+      {capture && (
+        <button className="webcam-button" onClick={handleCapture}>
+          <i className="fa-solid fa-record-vinyl" />
+          Capture
+        </button>
+      )}
     </div>
   );
 };
