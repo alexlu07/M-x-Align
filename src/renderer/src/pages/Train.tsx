@@ -1,4 +1,5 @@
 import { AppContext } from '@renderer/AppContext';
+import { Graphs } from '@renderer/components/Graphs';
 import { ImageBox } from '@renderer/components/ImageBox';
 import { PredictionBar } from '@renderer/components/PredictionBar';
 import { Webcam } from '@renderer/components/Webcam';
@@ -58,7 +59,7 @@ export const Train = (): React.JSX.Element => {
           }}
         />
       )}
-      {/* Graphs */}
+      <Graphs logs={logs} />
     </div>
   );
 };
