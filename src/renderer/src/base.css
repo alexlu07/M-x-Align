@@ -1,0 +1,63 @@
+:root {
+  --color-white: #f8f9fa;
+  --color-gray: #ced4da;
+  --color-dark-gray: #343a40;
+  --color-black: #1e1e1e;
+
+  --color-blue: #4dabf7;
+  --color-blue-light: #a5d8ff;
+  --color-blue-dark: #228be6;
+
+  --color-purple: #9775fa;
+  --color-purple-light: #d0bfff;
+  --color-purple-dark: #7950f2;
+}
+
+:root {
+  --color-text-primary: var(--color-white);
+  --color-text-blue: var(--color-blue);
+  --color-text-purple: var(--color-purple);
+
+  --color-fill-gray: var(--color-gray);
+  --color-fill-blue: var(--color-blue-dark);
+  --color-fill-purple: var(--color-purple-dark);
+
+  --color-background-1: var(--color-black);
+  --color-background-2: var(--color-dark-gray);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  color: var(--color-text-primary);
+  background: var(--color-background-2);
+  line-height: 1.6;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -3,8 +3,9 @@ import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import { AppContext } from '@renderer/AppContext';
 import { Route, Routes } from 'react-router';
-import { Home } from './pages/Home';
-import { Train } from './pages/Train';
+import { Home } from '@renderer/pages/Home';
+import { Train } from '@renderer/pages/Train';
+import { Navbar } from '@renderer/components/Navbar';
 
 export const App = (): React.JSX.Element => {
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -68,6 +69,7 @@ export const App = (): React.JSX.Element => {
         setModel,
       }}
     >
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/train" element={<Train />} />

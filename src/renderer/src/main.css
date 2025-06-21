@@ -1,0 +1,9 @@
+@import '@renderer/base.css';
+
+#root {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
