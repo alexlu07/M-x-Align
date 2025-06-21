@@ -1,0 +1,64 @@
+.navbar {
+  background-color: var(--color-background-1);
+  width: 60px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-right: solid 1.5px var(--color-fill-gray);
+}
+
+.nav-button {
+  width: 53px;
+  height: 53px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--color-background-1);
+}
+
+.nav-button:hover:not(.selected) {
+  background-color: var(--color-background-2);
+}
+
+.selected {
+  background-color: var(--color-fill-gray);
+}
+
+.nav-divider {
+  background-color: var(--color-fill-gray);
+  width: 45px;
+  height: 1.5px;
+  border-radius: 1px;
+}
+
+.nav-square {
+  width: 37px;
+  height: 37px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--color-background-1);
+  border-radius: 8px;
+
+  border: solid 1.5px var(--color-fill-gray);
+}
+
+.selected .nav-square {
+  border: none;
+}
+
+.nav-icon {
+  color: var(--color-fill-gray);
+  width: 20px;
+  height: 20px;
+}
