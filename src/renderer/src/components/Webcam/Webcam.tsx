@@ -1,3 +1,5 @@
+import './Webcam.css';
+
 import { AppContext } from '@renderer/AppContext';
 import { memo, Ref, useContext, useEffect, useRef } from 'react';
 import { drawKeypoints, drawSkeleton } from './drawing';
@@ -19,7 +21,7 @@ const WebcamComponent = ({
 
   useEffect(() => {
     if (!stream) {
-      navigator.mediaDevices.getUserMedia({ video: { width: 300, height: 300 } }).then((result) => {
+      navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 } }).then((result) => {
         setStream(result);
       });
       return;
@@ -99,13 +101,7 @@ const WebcamComponent = ({
   return (
     <div className="webcam">
       <video style={{ display: 'none' }} ref={videoRef} />
-      <canvas
-        className="canvas"
-        width="300"
-        height="300"
-        style={{ display: display ? 'flex' : 'none' }}
-        ref={canvasRef}
-      />
+      <canvas className="canvas" style={{ display: display ? 'flex' : 'none' }} ref={canvasRef} />
 
       {capture && (
         <button className="webcam-button" onClick={handleCapture}>

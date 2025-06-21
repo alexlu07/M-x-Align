@@ -1,0 +1,67 @@
+.prediction-bar {
+  width: 95%;
+
+  display: flex;
+  align-content: stretch;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.positive, .negative {
+	display: flex;
+	flex-direction: row;
+  align-items: center;
+}
+
+.label {
+	width: 90px;
+
+  font-size: 20px;
+	font-weight: 600;
+}
+
+.positive .label {
+	color: var(--color-fill-blue);
+}
+
+.negative .label {
+	color: var(--color-fill-purple);
+}
+
+.bar {
+  height: 28px;
+  flex: 1;
+
+  background-color: var(--color-fill-gray);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.bar .inner {
+  height: 100%;
+  position: relative;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  border-radius: 7px;
+  overflow: hidden;
+
+  transition: width 0.3s ease-in-out;
+}
+
+.positive .inner {
+    background-color: var(--color-fill-blue);
+}
+
+.negative .inner {
+    background-color: var(--color-fill-purple);
+}
+
+.percentage {
+  margin-right: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  pointer-events: none;
+}

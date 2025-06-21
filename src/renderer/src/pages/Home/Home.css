@@ -45,3 +45,12 @@
 
   background-color: var(--color-background-1);
 }
+
+.webcam-container {
+  height: 360px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}

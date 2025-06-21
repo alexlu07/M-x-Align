@@ -1,3 +1,5 @@
+import './PredictionBar.css';
+
 import { AppContext } from '@renderer/AppContext';
 import { preprocess } from '@shared/utils';
 import { Tensor, tensor2d } from '@tensorflow/tfjs';
@@ -33,10 +35,10 @@ export const PredictionBar = (): React.JSX.Element => {
   }, [keypointsRef, modelRef]);
 
   return (
-    <div className="label-box vertbox">
+    <div className="prediction-bar">
       <div className="positive">
         <div className="label">Positive</div>
-        <div className="progress-bar">
+        <div className="bar">
           <div className="inner" style={{ width: `${Math.round(prediction * 100)}%` }}>
             <span className="percentage">{Math.round(prediction * 100)}%</span>
           </div>
@@ -44,7 +46,7 @@ export const PredictionBar = (): React.JSX.Element => {
       </div>
       <div className="negative">
         <div className="label">Negative</div>
-        <div className="progress-bar">
+        <div className="bar">
           <div className="inner" style={{ width: `${Math.round((1 - prediction) * 100)}%` }}>
             <span className="percentage">{Math.round((1 - prediction) * 100)}%</span>
           </div>
