@@ -1,0 +1,63 @@
+.train {
+  height: 100%;
+  position: relative;
+
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.train-samples {
+  height: 500px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.train-webcam-container {
+  height: 400px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 25px;
+
+  background-color: var(--color-background-1);
+}
+
+.forward-btn {
+  position: absolute;
+  right: 15px;
+  height: 160px;
+  width: 30px;
+
+  border-radius: 6px;
+  border: none;
+
+  font-size: 20px;
+
+  color: var(--color-text-primary);
+  background-color: var(--color-fill-blue);
+}
+
+.back-btn {
+  position: absolute;
+  left: 15px;
+  height: 160px;
+  width: 30px;
+
+  border-radius: 6px;
+  border: none;
+
+  font-size: 20px;
+
+  color: var(--color-text-primary);
+  background-color: var(--color-fill-blue);
+}

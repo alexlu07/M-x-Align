@@ -1,11 +1,15 @@
+import './ImageBox.css';
+
 import { useEffect, useRef } from 'react';
 
 export const ImageBox = ({
   type,
+  focused,
   images,
   onClick,
 }: {
   type: string;
+  focused: boolean;
   images: ImageData[];
   onClick: () => void;
 }): React.JSX.Element => {
@@ -26,22 +30,23 @@ export const ImageBox = ({
   }, [images]);
 
   return (
-    <div className="sample-box vertbox" onClick={onClick}>
-      <div className="sample-box-header">{type}</div>
-
-      {images.length ? (
-        images.map((_, idx) => (
-          <canvas
-            key={idx}
-            ref={(el) => {
-              canvasRefs.current[idx] = el;
-            }}
-            className="mini-canvas"
-          />
-        ))
-      ) : (
-        <div>Training data appears here...</div>
-      )}
+    <div className={'image-box' + ' image-box-' + type + ' focused-' + focused} onClick={onClick}>
+      <div className="image-box-title">{type}</div>
+      <div className="images">
+        {images.length ? (
+          images.map((_, idx) => (
+            <canvas
+              key={idx}
+              ref={(el) => {
+                canvasRefs.current[idx] = el;
+              }}
+              className="mini-canvas"
+            />
+          ))
+        ) : (
+          <div className="fallback-text">Training data appears here...</div>
+        )}
+      </div>
     </div>
   );
 };

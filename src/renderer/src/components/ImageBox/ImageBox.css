@@ -1,0 +1,72 @@
+.image-box-Positive.focused-true {
+  --color-shadow-focus: var(--color-blue-light);
+  --color-fill-focus: var(--color-fill-blue);
+  --color-text-focus: var(--color-text-blue);
+}
+
+.image-box-Negative.focused-true {
+  --color-shadow-focus: var(--color-purple-light);
+  --color-fill-focus: var(--color-fill-purple);
+  --color-text-focus: var(--color-text-purple);
+}
+
+.focused-false {
+  --color-shadow-focus: var(--color-fill-gray);
+  --color-fill-focus: var(--color-fill-gray);
+  --color-text-focus: var(--color-text-primary);
+}
+
+.image-box {
+  width: 400px;
+  height: 230px;
+
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 30px;
+  padding: 20px;
+
+  box-shadow: var(--color-shadow-focus) 5px 5px;
+  background-color: var(--color-background-1);
+}
+
+.image-box-title {
+  padding-left: 10px;
+  padding-bottom: 7px;
+  margin-bottom: 20px;
+
+  font-weight: 600;
+
+  border-bottom: solid 1.5px var(--color-fill-focus);
+  color: var(--color-text-focus);
+}
+
+.images {
+  overflow-y: auto;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.images::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+  background-color: var(--color-dark-gray);
+}
+
+.images::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--color-fill-focus);
+}
+
+.mini-canvas {
+  height: 72x;
+  width: 96px;
+
+  border-radius: 10px;
+}
+
+.fallback-text {
+  font-size: 12px;
+}

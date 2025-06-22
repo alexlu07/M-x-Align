@@ -32,7 +32,6 @@ const WebcamComponent = ({
 
     let hasWarned = false;
     let active = true;
-    const id = Math.random();
 
     video.srcObject = stream;
     video.play().then(() => {
@@ -45,7 +44,6 @@ const WebcamComponent = ({
     });
 
     const detectPose = async (): Promise<void> => {
-      console.log(id);
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);

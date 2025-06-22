@@ -1,3 +1,5 @@
+import './Train.css';
+
 import { AppContext } from '@renderer/AppContext';
 import { Graphs } from '@renderer/components/Graphs';
 import { ImageBox } from '@renderer/components/ImageBox';
@@ -5,6 +7,7 @@ import { PredictionBar } from '@renderer/components/PredictionBar';
 import { Webcam } from '@renderer/components/Webcam';
 import { Logs } from '@tensorflow/tfjs';
 import { useCallback, useContext, useRef, useState } from 'react';
+import { PiCaretDoubleLeftBold, PiCaretDoubleRightBold } from 'react-icons/pi';
 
 export const Train = (): React.JSX.Element => {
   const { setModel } = useContext(AppContext);
@@ -18,7 +21,8 @@ export const Train = (): React.JSX.Element => {
 
   const [logs, setLogs] = useState<Logs[]>([]);
 
-  const focusRef = useRef<boolean>(false); // positive = false
+  const [focus, setFocus] = useState<boolean>(false); // positive = false
+  const focusRef = useRef<boolean>(false);
 
   const captureCallback = useCallback((imageData: ImageData, keypoints: Keypoint3D[]) => {
     const label = +focusRef.current;
@@ -42,50 +46,54 @@ export const Train = (): React.JSX.Element => {
   };
 
   return (
-    <div className="container horibox">
-      <div className="dropdown-box vertbox">
-        <div className="header">
-          <span>
-            <i className="fa-solid fa-caret-down"></i>Training Samples
-          </span>
+    <div className="train">
+      {!trainView && (
+        <div className="train-samples">
+          <ImageBox
+            type="Positive"
+            focused={!focus}
+            images={posImages}
+            onClick={() => {
+              focusRef.current = false;
+              setFocus(false);
+            }}
+          />
+          <ImageBox
+            type="Negative"
+            focused={focus}
+            images={negImages}
+            onClick={() => {
+              focusRef.current = true;
+              setFocus(true);
+            }}
+          />
         </div>
-        {!trainView && (
-          <div className="samples vertbox">
-            <ImageBox
-              type="Positive"
-              images={posImages}
-              onClick={() => {
-                focusRef.current = false;
-              }}
-            />
-            <ImageBox
-              type="Negative"
-              images={negImages}
-              onClick={() => {
-                focusRef.current = true;
-              }}
-            />
-          </div>
-        )}
-      </div>
+      )}
 
-      {trainView && <button onClick={() => setTrainView(false)} />}
-
-      <div>
+      <div className="train-webcam-container">
         <Webcam capture={trainView ? null : captureCallback} />
         {trainView && <PredictionBar />}
       </div>
 
+      {trainView && <Graphs logs={logs} />}
+
+      {trainView && (
+        <button className="back-btn" onClick={() => setTrainView(false)}>
+          <PiCaretDoubleLeftBold />
+        </button>
+      )}
+
       {!trainView && (
         <button
+          className="forward-btn"
           onClick={() => {
             setTrainView(true);
             if (!training) startTraining();
           }}
-        />
+        >
+          <PiCaretDoubleRightBold />
+        </button>
       )}
-
-      {trainView && <Graphs logs={logs} />}
     </div>
   );
 };
