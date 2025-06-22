@@ -1,0 +1,77 @@
+.model-list {
+  width: 360px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 50px;
+  padding: 20px;
+
+  box-shadow: var(--color-blue-light) 5px 5px;
+  background-color: var(--color-background-1);
+}
+
+.model-list-title {
+  padding-left: 20px;
+  padding-bottom: 7px;
+  margin-bottom: 20px;
+
+  font-size: 25px;
+  font-weight: 600;
+
+  border-bottom: solid 1.5px var(--color-fill-gray);
+}
+
+.model-list > ul {
+  margin-bottom: 20px;
+  overflow-y: auto;
+}
+
+.model-list > ul::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+  background-color: var(--color-dark-gray);
+}
+
+.model-list > ul::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--color-fill-blue);
+}
+
+.list-item {
+  padding-left: 20px;
+  padding-right: 10px;
+  margin-right: 10px;
+  margin-bottom: 8px;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+}
+
+.list-item:hover:not(.selected-model) {
+  background-color: var(--color-dark-gray);
+}
+
+.selected-model {
+  background-color: var(--color-fill-blue);
+}
+
+.list-item > div {
+  margin-left: 10px;
+
+  font-size: 20px;
+
+  text-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.list-item > div::-webkit-scrollbar {
+  display: none;
+}
+
+.list-item > svg {
+  flex-shrink: 0;
+}

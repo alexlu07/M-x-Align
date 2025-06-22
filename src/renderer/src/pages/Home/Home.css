@@ -12,6 +12,7 @@
   align-items: center;
 
   background-color: var(--color-background-2);
+  padding-bottom: 30px;
 }
 
 .title {
@@ -29,10 +30,11 @@
 }
 
 .model-list-container {
+  min-height: 0;
   margin-top: 50px;
   margin-bottom: 80px;
+
   flex: 1;
-  background-color: red;
 }
 
 .right-panel {
@@ -42,6 +44,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 50px;
 
   background-color: var(--color-background-1);
 }
@@ -53,4 +56,20 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.train-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--color-text-purple);
+
+  font-size: 25px;
+  font-weight: 400px;
+  text-decoration: none;
+}
+
+.train-link:hover {
+  color: var(--color-fill-purple);
 }

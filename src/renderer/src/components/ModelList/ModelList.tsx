@@ -1,6 +1,8 @@
+import './ModelList.css';
+
 import { AppContext } from '@renderer/AppContext';
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { PiCheckBold, PiMinusBold } from 'react-icons/pi';
 
 export const ModelList = (): React.JSX.Element => {
   const { currentModel, setModel } = useContext(AppContext);
@@ -17,33 +19,27 @@ export const ModelList = (): React.JSX.Element => {
   }, [setModel]);
 
   return (
-    <div className="model-list vertbox">
-      <h1>Choose Model</h1>
+    <div className="model-list">
+      <div className="model-list-title">Select Model</div>
       <ul>
         {modelList.map((modelId) => {
           if (modelId === currentModel) {
             return (
-              <li key={modelId}>
-                <i className="fa-solid fa-check fa-fw" />
-                {modelId}
+              <li key={modelId} className="list-item selected-model">
+                <PiCheckBold />
+                <div>{modelId}</div>
               </li>
             );
           } else {
             return (
-              <li key={modelId} onClick={() => setModel(modelId)}>
-                <i className="fa-solid fa-minus fa-fw" />
-                {modelId}
+              <li key={modelId} onClick={() => setModel(modelId)} className="list-item">
+                <PiMinusBold />
+                <div>{modelId}</div>
               </li>
             );
           }
         })}
       </ul>
-      <div>
-        <Link to="/train">
-          <i className="fa-solid fa-plus fa-fw" />
-          Train
-        </Link>
-      </div>
     </div>
   );
 };

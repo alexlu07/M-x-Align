@@ -3,6 +3,7 @@ import './Home.css';
 import { ModelList } from '@renderer/components/ModelList';
 import { PredictionBar } from '@renderer/components/PredictionBar';
 import { Webcam } from '@renderer/components/Webcam';
+import { PiPlusBold } from 'react-icons/pi';
 import { Link } from 'react-router';
 
 export const Home = (): React.JSX.Element => {
@@ -21,9 +22,10 @@ export const Home = (): React.JSX.Element => {
           <Webcam />
           <PredictionBar />
         </div>
-        <div className="train-link">
-          <Link to="/train">Train new model</Link>
-        </div>
+        <Link className="train-link" to="/train">
+          <PiPlusBold />
+          Train new model
+        </Link>
       </div>
     </div>
   );
