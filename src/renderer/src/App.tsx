@@ -51,6 +51,8 @@ export const App = (): React.JSX.Element => {
   /*
   TODO:
   - Rename models (and check for conflict)
+  - flip camera
+  - settings page
 
   REFACTORING:
   - Create Hook for managing modelRef and currentModel

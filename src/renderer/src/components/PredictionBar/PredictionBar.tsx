@@ -3,34 +3,33 @@ import './PredictionBar.css';
 import { AppContext } from '@renderer/AppContext';
 import { preprocess } from '@shared/utils';
 import { Tensor, tensor2d } from '@tensorflow/tfjs';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export const PredictionBar = (): React.JSX.Element => {
   const { keypointsRef, modelRef } = useContext(AppContext);
   const [prediction, setPrediction] = useState<number>(0.5);
 
-  const requestRef = useRef<number>(null);
-
   useEffect(() => {
+    let active = true;
+
     const predictPose = async (): Promise<void> => {
+      console.log('hi');
       const keypoints = keypointsRef?.current;
       const model = modelRef?.current;
       if (keypoints && model) {
         const input = preprocess(keypointsRef.current);
         const results = model.predict(tensor2d(input, [1, input.length])) as Tensor;
 
-        setPrediction(results.dataSync()[0]);
+        setPrediction((await results.data())[0]);
       }
 
-      requestRef.current = requestAnimationFrame(predictPose);
+      if (active) requestAnimationFrame(predictPose);
     };
 
-    requestRef.current = requestAnimationFrame(predictPose);
+    requestAnimationFrame(predictPose);
 
     return () => {
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
-      }
+      active = false;
     };
   }, [keypointsRef, modelRef]);
 

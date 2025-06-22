@@ -17,8 +17,6 @@ const WebcamComponent = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const requestRef = useRef<number>(null);
-
   useEffect(() => {
     if (!stream) {
       navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 } }).then((result) => {
@@ -33,20 +31,21 @@ const WebcamComponent = ({
     if (!video || !canvas) return; // should never happen
 
     let hasWarned = false;
+    let active = true;
+    const id = Math.random();
 
-    if (!video.srcObject) {
-      video.srcObject = stream;
-      video.play().then(() => {
-        video.width = video.videoWidth;
-        video.height = video.videoHeight;
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+    video.srcObject = stream;
+    video.play().then(() => {
+      video.width = video.videoWidth;
+      video.height = video.videoHeight;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-        requestRef.current = requestAnimationFrame(detectPose);
-      });
-    }
+      requestAnimationFrame(detectPose);
+    });
 
     const detectPose = async (): Promise<void> => {
+      console.log(id);
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -77,13 +76,11 @@ const WebcamComponent = ({
         }
       }
 
-      requestRef.current = requestAnimationFrame(detectPose);
+      if (active) requestAnimationFrame(detectPose);
     };
 
     return () => {
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
-      }
+      active = false;
     };
   }, [stream, setStream, poseModelRef, keypointsRef]);
 
