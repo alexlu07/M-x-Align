@@ -1,7 +1,53 @@
 .webcam {
-  /* TODO */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 }
 
 .canvas {
   border-radius: 30px;
+}
+
+.webcam-buttons {
+  width: 230px;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.webcam-button {
+  height: 35px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 10px;
+  border: none;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  background-color: var(--color-fill-blue);
+  color: var(--color-text-primary);
+}
+
+.webcam-button:hover {
+  background-color: var(--color-blue);
+}
+
+.webcam-button:active {
+  background-color: var(--color-blue-dark);
+}
+
+.webcam-buttons svg {
+  position: absolute;
+  left: 40px;
+
+  height: 30px;
+  width: 30px;
 }

@@ -1,8 +1,9 @@
 import './Webcam.css';
 
 import { AppContext } from '@renderer/AppContext';
-import { memo, Ref, useContext, useEffect, useRef } from 'react';
+import { memo, useContext, useEffect, useRef, useState } from 'react';
 import { drawKeypoints, drawSkeleton } from './drawing';
+import { PiCameraBold, PiRecordFill, PiStopCircleBold } from 'react-icons/pi';
 
 const WebcamComponent = ({
   display = true,
@@ -10,12 +11,13 @@ const WebcamComponent = ({
 }: {
   display?: boolean;
   capture?: ((imageData: ImageData, keypoints: Keypoint3D[]) => void) | null;
-  keypointsRef?: Ref<Keypoint3D>;
 }): React.JSX.Element => {
   const { stream, setStream, poseModelRef, keypointsRef } = useContext(AppContext);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const [intervalId, setIntervalId] = useState<number>(0);
 
   useEffect(() => {
     if (!stream) {
@@ -82,6 +84,12 @@ const WebcamComponent = ({
     };
   }, [stream, setStream, poseModelRef, keypointsRef]);
 
+  useEffect(() => {
+    return () => {
+      if (intervalId) clearTimeout(intervalId);
+    };
+  }, [intervalId]);
+
   const handleCapture = (): void => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -93,16 +101,41 @@ const WebcamComponent = ({
     }
   };
 
+  const handleRecord = (): void => {
+    console.log('timeout', intervalId);
+    if (intervalId) {
+      window.clearInterval(intervalId);
+      setIntervalId(0);
+    } else {
+      setIntervalId(window.setInterval(handleCapture, 100));
+    }
+  };
+
   return (
     <div className="webcam">
       <video style={{ display: 'none' }} ref={videoRef} />
       <canvas className="canvas" style={{ display: display ? 'flex' : 'none' }} ref={canvasRef} />
 
       {capture && (
-        <button className="webcam-button" onClick={handleCapture}>
-          <i className="fa-solid fa-record-vinyl" />
-          Capture
-        </button>
+        <div className="webcam-buttons">
+          <button className="webcam-button" onClick={handleCapture}>
+            <PiCameraBold />
+            Capture
+          </button>
+          <button className="webcam-button" onClick={handleRecord}>
+            {intervalId ? (
+              <>
+                <PiStopCircleBold />
+                Stop
+              </>
+            ) : (
+              <>
+                <PiRecordFill />
+                Record
+              </>
+            )}
+          </button>
+        </div>
       )}
     </div>
   );

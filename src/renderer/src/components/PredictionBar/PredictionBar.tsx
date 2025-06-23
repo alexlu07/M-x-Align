@@ -13,7 +13,6 @@ export const PredictionBar = (): React.JSX.Element => {
     let active = true;
 
     const predictPose = async (): Promise<void> => {
-      console.log('hi');
       const keypoints = keypointsRef?.current;
       const model = modelRef?.current;
       if (keypoints && model) {

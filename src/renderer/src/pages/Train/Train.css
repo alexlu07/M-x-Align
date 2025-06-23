@@ -32,9 +32,8 @@
   background-color: var(--color-background-1);
 }
 
-.forward-btn {
+.forward-btn, .back-btn {
   position: absolute;
-  right: 15px;
   height: 160px;
   width: 30px;
 
@@ -47,17 +46,18 @@
   background-color: var(--color-fill-blue);
 }
 
+.forward-btn {
+  right: 15px;
+}
+
 .back-btn {
-  position: absolute;
   left: 15px;
-  height: 160px;
-  width: 30px;
+}
 
-  border-radius: 6px;
-  border: none;
+.forward-btn:hover, .back-btn:hover {
+  background-color: var(--color-blue);
+}
 
-  font-size: 20px;
-
-  color: var(--color-text-primary);
-  background-color: var(--color-fill-blue);
+.forward-btn:active, .back-btn:active {
+  background-color: var(--color-blue-dark);
 }

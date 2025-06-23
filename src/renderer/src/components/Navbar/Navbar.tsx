@@ -10,7 +10,6 @@ export const Navbar = (): React.JSX.Element => {
   const pages = [
     { path: '/', Icon: PiHouseFill },
     { path: '/train', Icon: PiCpuFill },
-    { path: '/train', Icon: PiCpuFill },
   ];
 
   return (

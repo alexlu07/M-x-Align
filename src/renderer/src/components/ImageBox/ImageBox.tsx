@@ -31,7 +31,10 @@ export const ImageBox = ({
 
   return (
     <div className={'image-box' + ' image-box-' + type + ' focused-' + focused} onClick={onClick}>
-      <div className="image-box-title">{type}</div>
+      <div className="image-box-title">
+        {type}
+        <span>{images.length}</span>
+      </div>
       <div className="images">
         {images.length ? (
           images.map((_, idx) => (
