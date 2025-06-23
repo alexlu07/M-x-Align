@@ -36,7 +36,7 @@ export const App = (): React.JSX.Element => {
       const detectorConfig = {
         runtime: 'mediapipe',
         modelType: 'full',
-        solutionPath: '/blazepose',
+        solutionPath: './blazepose',
       };
 
       poseModelRef.current = await poseDetection.createDetector(model, detectorConfig);

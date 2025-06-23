@@ -74,7 +74,7 @@ export const train = async (
   });
 
   await model.fit(xs, ys, {
-    epochs: 16,
+    epochs: 50,
     batchSize: 16,
     validationSplit: 0.2,
     callbacks: callbacks,
