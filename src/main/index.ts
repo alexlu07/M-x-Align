@@ -75,7 +75,8 @@ app.whenReady().then(() => {
         });
       },
     };
-    return models.train(samples, callbacks);
+
+    mainWindow?.webContents.send('trainComplete', await models.train(samples, callbacks));
   });
 });
 

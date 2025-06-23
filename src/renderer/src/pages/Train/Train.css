@@ -61,3 +61,7 @@
 .forward-btn:active, .back-btn:active {
   background-color: var(--color-blue-dark);
 }
+
+.disabled, .disabled:hover, .disabled:active {
+  background-color: var(--color-fill-gray);
+}

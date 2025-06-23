@@ -1,3 +1,5 @@
+import './Graphs.css';
+
 import * as tf from '@tensorflow/tfjs';
 import {
   CartesianGrid,
@@ -12,7 +14,7 @@ import {
 
 export const Graphs = ({ logs }: { logs: tf.Logs[] }): React.JSX.Element => {
   return (
-    <div className="w-full h-96">
+    <div className="loss-graph">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={logs}>
           <CartesianGrid strokeDasharray="3 3" />

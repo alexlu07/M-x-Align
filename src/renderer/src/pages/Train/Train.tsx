@@ -18,6 +18,7 @@ export const Train = (): React.JSX.Element => {
   const [posImages, setPosImages] = useState<ImageData[]>([]);
   const [negImages, setNegImages] = useState<ImageData[]>([]);
   const [trainingData, setTrainingData] = useState<Sample[]>([]);
+  const disabled = !(posImages.length > 10 && negImages.length > 10);
 
   const [logs, setLogs] = useState<Logs[]>([]);
 
@@ -31,18 +32,21 @@ export const Train = (): React.JSX.Element => {
   }, []);
 
   const startTraining = (): void => {
+    setTraining(true);
+    setLogs([]);
+
     const stopListening = window.electron.ipcRenderer.on('trainProgress', (_, log) => {
       setLogs((prev) => [...prev, log]);
       console.log(log);
     });
 
-    window.electron.ipcRenderer.invoke('train', trainingData).then((modelId) => {
+    window.electron.ipcRenderer.once('trainComplete', (_, modelId) => {
       stopListening();
       setTraining(false);
       setModel(modelId);
     });
 
-    setTraining(true);
+    window.electron.ipcRenderer.invoke('train', trainingData);
   };
 
   return (
@@ -85,10 +89,12 @@ export const Train = (): React.JSX.Element => {
 
       {!trainView && (
         <button
-          className="forward-btn"
+          className={'forward-btn' + (disabled ? ' disabled' : '')}
           onClick={() => {
-            setTrainView(true);
-            if (!training) startTraining();
+            if (!disabled) {
+              setTrainView(true);
+              if (!training) startTraining();
+            }
           }}
         >
           <PiCaretDoubleRightBold />
