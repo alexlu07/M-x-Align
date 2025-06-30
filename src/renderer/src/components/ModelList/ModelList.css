@@ -49,6 +49,7 @@
 
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .list-item:hover:not(.selected-model) {
@@ -60,8 +61,6 @@
 }
 
 .list-item > div {
-  margin-left: 10px;
-
   font-size: 20px;
 
   text-wrap: nowrap;
@@ -74,4 +73,87 @@
 
 .list-item > svg {
   flex-shrink: 0;
+}
+
+.list-item > .popups {
+  display: none;
+}
+
+.list-item:hover > .popups {
+  display: block;
+  transition: scale 0.15s ease-in-out;
+}
+
+.popups:hover {
+  scale: 1.4;
+}
+
+.confirmation-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #8896a550;
+}
+
+.confirmation-box {
+  width: 500px;
+  height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 25px;
+  background-color: var(--color-background-1);
+}
+
+.confirmation-text {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.confirmation-text > span{
+  color: var(--color-text-blue);
+  font-weight: 800;
+}
+
+.confirmation-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.cancel-button, .delete-button {
+  width: 85px;
+  height: 25px;
+
+  font-weight: 600;
+
+  border: none;
+
+  color: var(--color-text-primary);
+  background-color: var(--color-background-2);
+
+  transition: background-color 0.2s ease-in-out;
+}
+
+.cancel-button:hover {
+  background-color: #595e63;
+}
+
+.delete-button {
+  background-color: #e03131;
+}
+
+.delete-button:hover {
+  background-color: #fa5252;
 }

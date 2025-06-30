@@ -59,6 +59,10 @@ app.whenReady().then(() => {
     return models.listModels();
   });
 
+  ipcMain.handle('deleteModel', (_, model) => {
+    return models.deleteModel(model);
+  });
+
   ipcMain.handle('loadFiles', (_, model) => {
     return models.loadFiles(model);
   });

@@ -17,6 +17,16 @@ export const listModels = (): string[] => {
   });
 };
 
+export const deleteModel = (model: string): boolean => {
+  const path = join(MODEL_DIR, model);
+  if (fs.existsSync(path)) {
+    fs.rmSync(path, { recursive: true, force: true });
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export const loadFiles = (model: string): ModelFiles => {
   const path = join(MODEL_DIR, model);
 
