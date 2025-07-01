@@ -1,3 +1,4 @@
+import { PiTrash } from 'react-icons/pi';
 import './ImageBox.css';
 
 import { useEffect, useRef } from 'react';
@@ -6,11 +7,13 @@ export const ImageBox = ({
   type,
   focused,
   images,
+  setImages,
   onClick,
 }: {
   type: string;
   focused: boolean;
   images: ImageData[];
+  setImages: (images: ImageData[]) => void;
   onClick: () => void;
 }): React.JSX.Element => {
   const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
@@ -38,13 +41,21 @@ export const ImageBox = ({
       <div className="images">
         {images.length ? (
           images.map((_, idx) => (
-            <canvas
-              key={idx}
-              ref={(el) => {
-                canvasRefs.current[idx] = el;
-              }}
-              className="mini-canvas"
-            />
+            <div key={idx} className="mini-canvas">
+              <canvas
+                ref={(el) => {
+                  canvasRefs.current[idx] = el;
+                }}
+              />
+              <div
+                onClick={() => {
+                  setImages(images.filter((_, index) => index != idx));
+                }}
+                className="delete-image"
+              >
+                <PiTrash />
+              </div>
+            </div>
           ))
         ) : (
           <div className="fallback-text">Training data appears here...</div>

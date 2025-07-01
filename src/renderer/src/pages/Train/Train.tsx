@@ -57,6 +57,7 @@ export const Train = (): React.JSX.Element => {
             type="Positive"
             focused={!focus}
             images={posImages}
+            setImages={setPosImages}
             onClick={() => {
               focusRef.current = false;
               setFocus(false);
@@ -66,6 +67,7 @@ export const Train = (): React.JSX.Element => {
             type="Negative"
             focused={focus}
             images={negImages}
+            setImages={setNegImages}
             onClick={() => {
               focusRef.current = true;
               setFocus(true);

@@ -53,6 +53,8 @@ export const App = (): React.JSX.Element => {
   - Rename models (and check for conflict)
   - flip camera
   - settings page
+  - be able to set model to null, and set to null during training
+  - optimize imagebox so it doesn't redraw every time
 
   REFACTORING:
   - Create Hook for managing modelRef and currentModel
