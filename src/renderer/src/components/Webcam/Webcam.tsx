@@ -46,7 +46,7 @@ const WebcamComponent = ({
     });
 
     const detectPose = async (): Promise<void> => {
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
       if (ctx) {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
@@ -92,7 +92,7 @@ const WebcamComponent = ({
 
   const handleCapture = (): void => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    const ctx = canvas?.getContext('2d', { willReadFrequently: true });
     const keypoints = keypointsRef?.current;
 
     if (capture && canvas && ctx && keypoints) {
@@ -102,7 +102,6 @@ const WebcamComponent = ({
   };
 
   const handleRecord = (): void => {
-    console.log('timeout', intervalId);
     if (intervalId) {
       window.clearInterval(intervalId);
       setIntervalId(0);
