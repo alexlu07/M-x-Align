@@ -60,26 +60,27 @@
   background-color: var(--color-fill-blue);
 }
 
-.list-item > div {
+.model-text {
+  flex: 1;
   font-size: 20px;
 
   text-wrap: nowrap;
   overflow-x: auto;
 }
 
-.list-item > div::-webkit-scrollbar {
+.model-text::-webkit-scrollbar {
   display: none;
 }
 
-.list-item > svg {
+.list-item svg {
   flex-shrink: 0;
 }
 
-.list-item > .popups {
+.list-item .popups {
   display: none;
 }
 
-.list-item:hover > .popups {
+.list-item:hover .popups {
   display: block;
   transition: scale 0.15s ease-in-out;
 }
@@ -137,10 +138,6 @@
   height: 25px;
 
   font-weight: 600;
-
-  border: none;
-
-  color: var(--color-text-primary);
   background-color: var(--color-background-2);
 
   transition: background-color 0.2s ease-in-out;

@@ -90,6 +90,10 @@ app.whenReady().then(() => {
     return models.listModels();
   });
 
+  ipcMain.handle('renameModel', (_, oldModel, newModel) => {
+    return models.renameModel(oldModel, newModel);
+  });
+
   ipcMain.handle('deleteModel', (_, model) => {
     return models.deleteModel(model);
   });

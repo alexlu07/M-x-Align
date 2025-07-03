@@ -17,6 +17,16 @@ export const listModels = (): string[] => {
   });
 };
 
+export const renameModel = (oldModel: string, newModel: string): boolean => {
+  const oldPath = join(MODEL_DIR, oldModel);
+  const newPath = join(MODEL_DIR, newModel);
+  if (fs.existsSync(oldPath)) {
+    fs.renameSync(oldPath, newPath);
+    return true;
+  }
+  return false;
+};
+
 export const deleteModel = (model: string): boolean => {
   const path = join(MODEL_DIR, model);
   if (fs.existsSync(path)) {

@@ -51,6 +51,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+}
+
+input {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+:focus-visible {
+  outline: none;
+}
+
 #root {
   display: flex;
   height: 100%;

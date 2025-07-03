@@ -2,15 +2,24 @@ import './ModelList.css';
 
 import { AppContext } from '@renderer/AppContext';
 import { useContext, useEffect, useState } from 'react';
-import { PiCheckBold, PiMinusBold, PiPencilSimple, PiTrashSimple } from 'react-icons/pi';
+import {
+  PiArrowArcLeft,
+  PiCheckBold,
+  PiMinusBold,
+  PiPencilSimple,
+  PiTrashSimple,
+} from 'react-icons/pi';
 
 export const ModelList = (): React.JSX.Element => {
   const { currentModel, setModel } = useContext(AppContext);
   const [modelList, setModelList] = useState<string[]>([]);
+  const [modelToEdit, setModelToEdit] = useState<string | null>(null);
+  const [editText, setEditText] = useState<string>('');
   const [modelToDelete, setModelToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     window.electron.ipcRenderer.invoke('listModels').then((models) => {
+      console.log('Models:', models);
       setModelList(models);
       if (models.length) {
         const modelId = models[0];
@@ -18,6 +27,18 @@ export const ModelList = (): React.JSX.Element => {
       }
     });
   }, [setModel]);
+
+  const renameModel = (): boolean => {
+    const newModelId = editText.trim();
+    if (modelToEdit && newModelId !== '' && !modelList.includes(newModelId)) {
+      window.electron.ipcRenderer.invoke('renameModel', modelToEdit, newModelId);
+      setModelToEdit(null);
+      setModelList((prevList) => prevList.map((id) => (id === modelToEdit ? editText.trim() : id)));
+      setModel(newModelId);
+      return true;
+    }
+    return false;
+  };
 
   const deleteModel = (modelId): void => {
     window.electron.ipcRenderer.invoke('deleteModel', modelId);
@@ -38,8 +59,48 @@ export const ModelList = (): React.JSX.Element => {
         {modelList.map((modelId) => {
           const shared = (
             <>
-              <div>{modelId}</div>
-              <PiPencilSimple className="popups" />
+              {modelId === modelToEdit ? (
+                <>
+                  <input
+                    className="model-text"
+                    autoFocus
+                    value={editText}
+                    onChange={(e) => {
+                      setEditText(e.target.value);
+                    }}
+                    onBlur={(e) => {
+                      console.log(e);
+                      if (
+                        e.relatedTarget?.getAttribute('data-action') === 'undo' ||
+                        !renameModel()
+                      ) {
+                        setModelToEdit(null);
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        renameModel();
+                      } else if (e.key === 'Escape') {
+                        setModelToEdit(null);
+                      }
+                    }}
+                  />
+                  <button data-action="undo">
+                    <PiArrowArcLeft className="popups" />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="model-text">{modelId}</div>
+                  <PiPencilSimple
+                    onClick={() => {
+                      setModelToEdit(modelId);
+                      setEditText(modelId);
+                    }}
+                    className="popups"
+                  />
+                </>
+              )}
               <PiTrashSimple onClick={() => setModelToDelete(modelId)} className="popups" />
             </>
           );

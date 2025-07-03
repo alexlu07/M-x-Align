@@ -27,13 +27,11 @@
   align-items: center;
 
   border-radius: 10px;
-  border: none;
 
   font-size: 20px;
   font-weight: 600;
 
   background-color: var(--color-fill-blue);
-  color: var(--color-text-primary);
 }
 
 .webcam-button:hover {

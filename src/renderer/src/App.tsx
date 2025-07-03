@@ -75,8 +75,24 @@ export const App = (): React.JSX.Element => {
       }}
     >
       <Routes>
-        <Route path="/" element={<><Navbar /><Home /></>} />
-        <Route path="/train" element={<><Navbar /><Train /></>} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar />
+              <Home />
+            </>
+          }
+        />
+        <Route
+          path="/train"
+          element={
+            <>
+              <Navbar />
+              <Train />
+            </>
+          }
+        />
         <Route path="/deploy" element={<Deploy />} />
       </Routes>
     </AppContext>

@@ -38,11 +38,7 @@
   width: 30px;
 
   border-radius: 6px;
-  border: none;
-
   font-size: 20px;
-
-  color: var(--color-text-primary);
   background-color: var(--color-fill-blue);
 }
 
