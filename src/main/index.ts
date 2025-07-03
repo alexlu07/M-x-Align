@@ -5,6 +5,7 @@ import icon from '../../resources/icon.png?asset';
 import * as models from './models';
 
 let mainWindow: BrowserWindow | null = null;
+let deployWindow: BrowserWindow | null = null;
 
 function createWindow(): void {
   // Create the browser window.
@@ -12,6 +13,7 @@ function createWindow(): void {
     width: 960,
     height: 640,
     show: false,
+    resizable: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -30,6 +32,35 @@ function createWindow(): void {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
+  }
+}
+
+function createDeployWindow(model: string): void {
+  // Create the deploy window.
+  deployWindow = new BrowserWindow({
+    width: 320,
+    height: 160,
+    show: false,
+    resizable: false,
+    transparent: true,
+    frame: false,
+    ...(process.platform === 'linux' ? { icon } : {}),
+    webPreferences: {
+      preload: join(__dirname, '../preload/index.js'),
+      sandbox: false,
+    },
+  });
+
+  deployWindow.on('ready-to-show', () => {
+    deployWindow?.show();
+  });
+
+  // Load the remote URL for development or the local html file for production.
+  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    console.log(process.env['ELECTRON_RENDERER_URL'] + '#/deploy?modelId=' + encodeURI(model));
+    deployWindow.loadURL(process.env['ELECTRON_RENDERER_URL'] + '#/deploy?modelId=' + encodeURI(model));
+  } else {
+    deployWindow.loadFile(join(__dirname, '../renderer/index.html'), { hash: '#/deploy', query: { model: model } });
   }
 }
 
@@ -81,6 +112,28 @@ app.whenReady().then(() => {
     };
 
     mainWindow?.webContents.send('trainComplete', await models.train(samples, callbacks));
+  });
+
+  ipcMain.handle('deploy', (_, model) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.close();
+      mainWindow = null;
+    }
+
+    if (deployWindow && !deployWindow.isDestroyed()) deployWindow.close();
+
+    createDeployWindow(model);
+    deployWindow?.webContents.send('deployModel', model);
+  });
+
+  ipcMain.handle('closeDeploy', () => {
+    if (deployWindow && !deployWindow.isDestroyed()) {
+      deployWindow?.close();
+      deployWindow = null;
+    }
+
+    if (mainWindow && !mainWindow.isDestroyed()) mainWindow.show();
+    else createWindow();
   });
 });
 

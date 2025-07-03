@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router';
 import { Home } from '@renderer/pages/Home';
 import { Train } from '@renderer/pages/Train';
 import { Navbar } from '@renderer/components/Navbar';
+import { Deploy } from './pages/Deploy';
 
 export const App = (): React.JSX.Element => {
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -73,10 +74,10 @@ export const App = (): React.JSX.Element => {
         setModel,
       }}
     >
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/train" element={<Train />} />
+        <Route path="/" element={<><Navbar /><Home /></>} />
+        <Route path="/train" element={<><Navbar /><Train /></>} />
+        <Route path="/deploy" element={<Deploy />} />
       </Routes>
     </AppContext>
   );

@@ -1,12 +1,19 @@
+import { AppContext } from '@renderer/AppContext';
 import './Home.css';
 
 import { ModelList } from '@renderer/components/ModelList';
 import { PredictionBar } from '@renderer/components/PredictionBar';
 import { Webcam } from '@renderer/components/Webcam';
-import { PiPlusBold } from 'react-icons/pi';
-import { Link } from 'react-router';
+import { useContext } from 'react';
+import { PiRocketLaunchBold } from 'react-icons/pi';
 
 export const Home = (): React.JSX.Element => {
+  const { currentModel } = useContext(AppContext);
+
+  const deploy = (): void => {
+    window.electron.ipcRenderer.invoke('deploy', currentModel);
+  }
+
   return (
     <div className="home">
       <div className="left-panel">
@@ -22,10 +29,7 @@ export const Home = (): React.JSX.Element => {
           <Webcam />
           <PredictionBar />
         </div>
-        <Link className="train-link" to="/train">
-          <PiPlusBold />
-          Train new model
-        </Link>
+        <button onClick={deploy} className="deploy-link"><PiRocketLaunchBold />Deploy</button>
       </div>
     </div>
   );
