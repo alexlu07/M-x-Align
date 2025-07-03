@@ -5,7 +5,13 @@ import { preprocess } from '@shared/utils';
 import { Tensor, tensor2d } from '@tensorflow/tfjs';
 import { useContext, useEffect, useState } from 'react';
 
-export const PredictionBar = (): React.JSX.Element => {
+export const PredictionBar = ({
+  labels = ['Positive', 'Negative'],
+  size = 90,
+}: {
+  labels?: string[];
+  size?: number;
+}): React.JSX.Element => {
   const { keypointsRef, modelRef } = useContext(AppContext);
   const [prediction, setPrediction] = useState<number>(0.5);
 
@@ -35,7 +41,9 @@ export const PredictionBar = (): React.JSX.Element => {
   return (
     <div className="prediction-bar">
       <div className="positive">
-        <div className="label">Positive</div>
+        <div className="label" style={size ? { width: size } : { display: 'none' }}>
+          {labels[0]}
+        </div>
         <div className="bar">
           <div className="inner" style={{ width: `${Math.round(prediction * 100)}%` }}>
             <span className="percentage">{Math.round(prediction * 100)}%</span>
@@ -43,7 +51,9 @@ export const PredictionBar = (): React.JSX.Element => {
         </div>
       </div>
       <div className="negative">
-        <div className="label">Negative</div>
+        <div className="label" style={size ? { width: size } : { display: 'none' }}>
+          {labels[1]}
+        </div>
         <div className="bar">
           <div className="inner" style={{ width: `${Math.round((1 - prediction) * 100)}%` }}>
             <span className="percentage">{Math.round((1 - prediction) * 100)}%</span>
