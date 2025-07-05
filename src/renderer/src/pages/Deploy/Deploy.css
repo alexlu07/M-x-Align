@@ -1,4 +1,108 @@
 .deploy-page {
   height: 100%;
+  padding: 10px;
+
   flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  /* border: 1px solid var(--color-fill-gray); */
+  border-radius: 10px;
+  color: var(--color-dark-gray);
+}
+
+.deploy-page-hover {
+  background-color: #00000020;
+}
+
+.deploy-bar {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-text-primary);
+}
+
+.deploy-menu {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.row-1, .row-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.row-1 {
+  background-color: var(--color-fill-gray);
+  border-radius: 7px;
+}
+
+.deploy-btn {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 7px;
+  background-color: var(--color-fill-gray);
+}
+
+.row-1 > .deploy-btn:hover {
+  background-color: var(--color-blue);
+}
+
+.row-1 > .deploy-btn:active {
+  background-color: var(--color-fill-blue);
+}
+
+.row-1 > .active {
+  background-color: var(--color-fill-blue);
+}
+
+.row-2 > .deploy-btn:hover:not(.stop-button) {
+  background-color: var(--color-purple);
+}
+
+.row-2 > .deploy-btn:active:not(.stop-button) {
+  background-color: var(--color-fill-purple);
+}
+
+.deploy-btn > svg {
+  height: 20px;
+  width: 20px;
+}
+
+.stop-button {
+  background-color: #e03131;
+}
+
+.stop-button:hover {
+  background-color: #fa5252;
+}
+
+.drag-button {
+  height: 72px;
+  width: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 7px;
+  font-size: 20px;
+
+  background-color: var(--color-fill-gray);
+  -webkit-app-region: drag;
 }

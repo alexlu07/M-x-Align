@@ -26,6 +26,10 @@ function createWindow(): void {
     mainWindow?.show();
   });
 
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
@@ -38,12 +42,14 @@ function createWindow(): void {
 function createDeployWindow(model: string): void {
   // Create the deploy window.
   deployWindow = new BrowserWindow({
-    width: 320,
-    height: 160,
+    width: 240,
+    height: 92,
     show: false,
     resizable: false,
     transparent: true,
+    hasShadow: false,
     frame: false,
+    alwaysOnTop: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -55,12 +61,20 @@ function createDeployWindow(model: string): void {
     deployWindow?.show();
   });
 
+  deployWindow.on('closed', () => {
+    deployWindow = null;
+  });
+
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    console.log(process.env['ELECTRON_RENDERER_URL'] + '#/deploy?modelId=' + encodeURI(model));
-    deployWindow.loadURL(process.env['ELECTRON_RENDERER_URL'] + '#/deploy?modelId=' + encodeURI(model));
+    deployWindow.loadURL(
+      process.env['ELECTRON_RENDERER_URL'] + '#/deploy?modelId=' + encodeURI(model),
+    );
   } else {
-    deployWindow.loadFile(join(__dirname, '../renderer/index.html'), { hash: '#/deploy', query: { model: model } });
+    deployWindow.loadFile(join(__dirname, '../renderer/index.html'), {
+      hash: '#/deploy',
+      query: { model: model },
+    });
   }
 }
 
@@ -119,25 +133,22 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle('deploy', (_, model) => {
-    if (mainWindow && !mainWindow.isDestroyed()) {
-      mainWindow.close();
-      mainWindow = null;
-    }
-
-    if (deployWindow && !deployWindow.isDestroyed()) deployWindow.close();
+    mainWindow?.close();
+    deployWindow?.close();
 
     createDeployWindow(model);
     deployWindow?.webContents.send('deployModel', model);
   });
 
   ipcMain.handle('closeDeploy', () => {
-    if (deployWindow && !deployWindow.isDestroyed()) {
-      deployWindow?.close();
-      deployWindow = null;
-    }
+    deployWindow?.close();
 
-    if (mainWindow && !mainWindow.isDestroyed()) mainWindow.show();
+    if (mainWindow) mainWindow.show();
     else createWindow();
+  });
+
+  ipcMain.handle('setFloating', (_, value) => {
+    deployWindow?.setAlwaysOnTop(value);
   });
 });
 

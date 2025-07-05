@@ -24,6 +24,7 @@ export const App = (): React.JSX.Element => {
       type: files.weights.type,
     });
 
+    await tf.ready();
     const model = await tf.loadLayersModel(tf.io.browserFiles([jsonFile, weightsFile]));
     modelRef.current = model;
     setCurrentModel(modelId);

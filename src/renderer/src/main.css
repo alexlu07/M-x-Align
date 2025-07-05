@@ -43,7 +43,7 @@ body {
   width: 100vw;
   height: 100vh;
   color: var(--color-text-primary);
-  background: var(--color-background-2);
+  background-color: #0000;
   line-height: 1.6;
   font-family: Nunito, sans-serif;
   text-rendering: optimizeLegibility;
