@@ -43,7 +43,7 @@ function createDeployWindow(model: string): void {
   // Create the deploy window.
   deployWindow = new BrowserWindow({
     width: 240,
-    height: 92,
+    height: 102,
     show: false,
     resizable: false,
     transparent: true,

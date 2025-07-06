@@ -11,6 +11,9 @@
   --color-purple: #9775fa;
   --color-purple-light: #d0bfff;
   --color-purple-dark: #7950f2;
+
+  --color-red: #fa5252;
+  --color-red-dark: #e03131;
 }
 
 :root {
@@ -43,7 +46,7 @@ body {
   width: 100vw;
   height: 100vh;
   color: var(--color-text-primary);
-  background-color: #0000;
+  background-color: transparent;
   line-height: 1.6;
   font-family: Nunito, sans-serif;
   text-rendering: optimizeLegibility;

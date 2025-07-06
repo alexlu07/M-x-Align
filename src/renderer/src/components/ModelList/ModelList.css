@@ -148,9 +148,9 @@
 }
 
 .delete-button {
-  background-color: #e03131;
+  background-color: var(--color-red-dark);
 }
 
 .delete-button:hover {
-  background-color: #fa5252;
+  background-color: var(--color-red);
 }

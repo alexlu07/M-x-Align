@@ -6,9 +6,11 @@ import { Tensor, tensor2d } from '@tensorflow/tfjs';
 import { useContext, useEffect, useState } from 'react';
 
 export const PredictionBar = ({
+  predCallback,
   labels = ['Positive', 'Negative'],
   size = 90,
 }: {
+  predCallback?: (diff: number) => void;
   labels?: string[];
   size?: number;
 }): React.JSX.Element => {
@@ -17,6 +19,7 @@ export const PredictionBar = ({
 
   useEffect(() => {
     let active = true;
+    let timestamp = Date.now();
 
     const predictPose = async (): Promise<void> => {
       const keypoints = keypointsRef?.current;
@@ -24,8 +27,15 @@ export const PredictionBar = ({
       if (keypoints && model) {
         const input = preprocess(keypointsRef.current);
         const results = model.predict(tensor2d(input, [1, input.length])) as Tensor;
+        const value = (await results.data())[0];
 
-        setPrediction((await results.data())[0]);
+        setPrediction(value);
+
+        if (predCallback) {
+          const now = Date.now();
+          if (value >= 0.5) timestamp = now;
+          predCallback(now - timestamp);
+        }
       }
 
       if (active) requestAnimationFrame(predictPose);
@@ -36,7 +46,7 @@ export const PredictionBar = ({
     return () => {
       active = false;
     };
-  }, [keypointsRef, modelRef]);
+  }, [predCallback, keypointsRef, modelRef]);
 
   return (
     <div className="prediction-bar">

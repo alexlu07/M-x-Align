@@ -3,15 +3,16 @@ import './Deploy.css';
 import { AppContext } from '@renderer/AppContext';
 import { PredictionBar } from '@renderer/components/PredictionBar';
 import { Webcam } from '@renderer/components/Webcam';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { PiArrowLineUp, PiArrowsOutCardinal, PiEye, PiStack, PiStop } from 'react-icons/pi';
 import { useSearchParams } from 'react-router';
 
 export const Deploy = (): React.JSX.Element => {
+  const [searchParams] = useSearchParams();
   const { setModel } = useContext(AppContext);
+  const [heat, setHeat] = useState(0);
   const [floating, setFloatingState] = useState(true);
   const [hovering, setHovering] = useState(false);
-  const [searchParams] = useSearchParams();
 
   const dragRef = useRef<HTMLDivElement>(null);
 
@@ -22,6 +23,12 @@ export const Deploy = (): React.JSX.Element => {
       setModel(modelId);
     }
   }, [searchParams, setModel]);
+
+  const heatCallback = useCallback((diff: number): void => {
+    if (diff < 1000) setHeat(0);
+    else if (diff < 8000) setHeat((diff - 1000) / 8000);
+    else setHeat(1);
+  }, []);
 
   const setFloating = (value: boolean): void => {
     window.electron.ipcRenderer.invoke('setFloating', value);
@@ -38,11 +45,12 @@ export const Deploy = (): React.JSX.Element => {
     <div
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={(e) => !inBounds(e.clientX, e.clientY) && setHovering(false)}
+      style={{ '--heat': heat } as CSSProperties}
       className={'deploy-page' + (hovering ? ' deploy-page-hover' : '')}
     >
       <div className="deploy-bar">
         <Webcam display={false} />
-        <PredictionBar labels={['P', 'N']} size={0} />
+        <PredictionBar predCallback={heatCallback} labels={['P', 'N']} size={0} />
       </div>
       {hovering && (
         <>

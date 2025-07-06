@@ -16,13 +16,56 @@
   background-color: #00000020;
 }
 
+@keyframes heatAnimation {
+  0% {
+    box-shadow: none;
+  }
+  50%, 100% {
+    box-shadow: 0px 0px 8px 5px var(--color-red-dark);
+  }
+}
+
+@keyframes shakeAnimation {
+  0%, 50% {
+    transform: translateX(0);
+  }
+  51%, 53%, 55%, 57%, 59%, 61%, 63%, 65%, 67%, 69%, 71%, 73%, 75%, 77%, 79%, 81%, 83%, 85%, 87%, 89%, 91%, 93%, 95%, 97%, 99% {
+    transform: translateX(-5px);
+  }
+  52%, 54%, 56%, 58%, 60%, 62%, 64%, 66%, 68%, 70%, 72%, 74%, 76%, 78%, 80%, 82%, 84%, 86%, 88%, 90%, 92%, 94%, 96%, 98% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
 .deploy-bar {
   height: 100%;
+  padding: 5px;
+
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border-radius: 7px;
   color: var(--color-text-primary);
+
+  background: repeating-linear-gradient(
+    45deg,
+    var(--heated-background),
+    var(--heated-background) 2px,
+    transparent 2px,
+    transparent 10px
+  );
+
+  animation:
+    1s heatAnimation forwards,
+    1s shakeAnimation;
+  animation-play-state: paused;
+  animation-delay: calc(-1s * var(--heat));
 }
 
 .deploy-menu {
@@ -85,11 +128,11 @@
 }
 
 .stop-button {
-  background-color: #e03131;
+  background-color: var(--color-red-dark);
 }
 
 .stop-button:hover {
-  background-color: #fa5252;
+  background-color: var(--color-red);
 }
 
 .drag-button {
