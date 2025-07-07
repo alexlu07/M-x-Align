@@ -13,7 +13,7 @@
 }
 
 .deploy-page-hover {
-  background-color: #00000020;
+  background-color: #1E283C80;
 }
 
 @keyframes heatAnimation {
@@ -148,4 +148,51 @@
 
   background-color: var(--color-fill-gray);
   -webkit-app-region: drag;
+}
+
+.expanded-page {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #1E283C80;
+}
+
+.expanded-container {
+  height: 360px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.unexpand {
+  width: 150px;
+  height: 40px;
+  margin-top: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 7px;
+  border: 1px solid var(--color-fill-blue);
+  font-size: 24px;
+
+  background-color: var(--color-fill-blue);
+  cursor: pointer;
+}
+
+.un-unexpandable {
+  background:
+    conic-gradient(
+      var(--color-fill-blue) 0% calc(var(--cool) * 100%),
+      black 0
+    );
+  cursor: auto;
 }

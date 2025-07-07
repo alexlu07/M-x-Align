@@ -7,6 +7,9 @@ import * as models from './models';
 let mainWindow: BrowserWindow | null = null;
 let deployWindow: BrowserWindow | null = null;
 
+let lockInterval: NodeJS.Timeout | null = null;
+let expanded = false;
+
 function createWindow(): void {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -57,12 +60,16 @@ function createDeployWindow(model: string): void {
     },
   });
 
+  expanded = false;
+
   deployWindow.on('ready-to-show', () => {
     deployWindow?.show();
   });
 
   deployWindow.on('closed', () => {
     deployWindow = null;
+    clearInterval(lockInterval!);
+    lockInterval = null;
   });
 
   // Load the remote URL for development or the local html file for production.
@@ -149,6 +156,53 @@ app.whenReady().then(() => {
 
   ipcMain.handle('setFloating', (_, value) => {
     deployWindow?.setAlwaysOnTop(value);
+  });
+
+  type DeployState = {
+    floating: boolean;
+    size: number[];
+    position: number[];
+  };
+
+  let deployState: DeployState = {
+    floating: false,
+    size: [240, 102],
+    position: [0, 0],
+  };
+
+  ipcMain.handle('setExpanded', (_, value) => {
+    if (!deployWindow) return;
+    if (expanded === value) return;
+    expanded = value;
+    if (value) {
+      deployState = {
+        floating: deployWindow.isAlwaysOnTop(),
+        size: deployWindow.getSize(),
+        position: deployWindow.getPosition(),
+      };
+
+      deployWindow.show();
+      deployWindow.focus();
+
+      deployWindow.setAlwaysOnTop(true);
+      deployWindow.setResizable(true);
+      deployWindow.maximize();
+      deployWindow.setResizable(false);
+
+      lockInterval = setInterval(() => {
+        deployWindow?.show();
+        deployWindow?.focus();
+      }, 100);
+    } else {
+      deployWindow.setAlwaysOnTop(deployState.floating);
+      deployWindow.setResizable(true);
+      deployWindow.setSize(deployState.size[0], deployState.size[1]);
+      deployWindow.setResizable(false);
+      deployWindow.setPosition(deployState.position[0], deployState.position[1]);
+
+      clearInterval(lockInterval!);
+      lockInterval = null;
+    }
   });
 });
 

@@ -10,7 +10,7 @@ export const PredictionBar = ({
   labels = ['Positive', 'Negative'],
   size = 90,
 }: {
-  predCallback?: (diff: number) => void;
+  predCallback?: (diffs: { heatDiff: number; coolDiff: number }) => void;
   labels?: string[];
   size?: number;
 }): React.JSX.Element => {
@@ -19,7 +19,8 @@ export const PredictionBar = ({
 
   useEffect(() => {
     let active = true;
-    let timestamp = Date.now();
+    let heatTimestamp = Date.now();
+    let coolTimestamp = Date.now();
 
     const predictPose = async (): Promise<void> => {
       const keypoints = keypointsRef?.current;
@@ -33,8 +34,9 @@ export const PredictionBar = ({
 
         if (predCallback) {
           const now = Date.now();
-          if (value >= 0.5) timestamp = now;
-          predCallback(now - timestamp);
+          if (value < 0.5) coolTimestamp = now;
+          else heatTimestamp = now;
+          predCallback({ heatDiff: now - heatTimestamp, coolDiff: now - coolTimestamp });
         }
       }
 
